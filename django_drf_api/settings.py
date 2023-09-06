@@ -17,7 +17,8 @@ if os.path.exists('evn.py'):
     import env 
 
 CLOUDINARY_STORAGE = {
-    'CLOUDINARY_URL': os.environ.get('CLOUDINARY')
+    'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
+
 }
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
@@ -31,10 +32,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-&-b+!y!86523&6d48!w1kts8^^3(x%4z5l@4o2=8%(=9$&1dic'
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['8000-myekman-djangorest-wrv9tc7u1ap.ws-eu104.gitpod.io']
 
 
 # Application definition
@@ -48,6 +50,8 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'cloudinary',
+
+    'profiles'
 ]
 
 MIDDLEWARE = [
