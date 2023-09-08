@@ -7,6 +7,7 @@ from .serializers import ProfileSerializers
 from django_drf_api.permissions import IsOwnerOrReadOnly
 
 class ProfileList(APIView):
+    
     def get(self, request):
         # takes the model profile and get all
         profiles = Profile.objects.all()
