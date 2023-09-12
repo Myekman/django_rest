@@ -19,4 +19,6 @@ class LikeDetail(generics.RetrieveDestroyAPIView):
     """
     permission_classes = [IsOwnerOrReadOnly]
     serializer_class = LikeSerializer
+    # A QuerySet represents a collection of objects from your database.
+    # It can have zero, one or many filters.
     queryset = Like.objects.all()

@@ -8,6 +8,7 @@ class PostSerializer(serializers.ModelSerializer):
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
 
+#field level validation
     def validate_image(self, value):
         if value.size > 2 * 1024 * 1024:
             raise serializers.ValidationError('Image size larger than 2MB')
@@ -20,6 +21,20 @@ class PostSerializer(serializers.ModelSerializer):
                 'Image width larger than 4096'
             )
         return value
+
+#field level validation
+    def validate_title(self, value):
+        if len(value) < 4:
+            raise serializers.ValidationError("Name is to short")
+        else:
+            return value
+
+#object level validation
+    def validate(self, data):
+        if data['title'] == data['content']:
+            raise serializers.ValidationError('title and content can not be the same')
+        else:
+            return data
 
     def get_is_owner(self, obj):
         request = self.context['request']
