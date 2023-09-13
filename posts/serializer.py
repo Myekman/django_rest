@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from posts.models import Post
+from likes.models import Like 
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -7,8 +8,11 @@ class PostSerializer(serializers.ModelSerializer):
     is_owner = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='owner.profile.id')
     profile_image = serializers.ReadOnlyField(source='owner.profile.image.url')
+    like_id = serializers.SerializerMethodField()
+    likes_count = serializers.ReadOnlyField()
+    comments_count = serializers.ReadOnlyField()
 
-#field level validation
+#------------------------------------------------------------------------field level validation
     def validate_image(self, value):
         if value.size > 2 * 1024 * 1024:
             raise serializers.ValidationError('Image size larger than 2MB')
@@ -22,28 +26,40 @@ class PostSerializer(serializers.ModelSerializer):
             )
         return value
 
-#field level validation
+#------------------------------------------------------------------------field level validation
     def validate_title(self, value):
         if len(value) < 4:
             raise serializers.ValidationError("Name is to short")
         else:
             return value
 
-#object level validation
+#------------------------------------------------------------------------object level validation
     def validate(self, data):
         if data['title'] == data['content']:
             raise serializers.ValidationError('title and content can not be the same')
         else:
             return data
 
+
+# ------------------------------------------------------------------------get the SerializerMethodField
     def get_is_owner(self, obj):
         request = self.context['request']
         return request.user == obj.owner
+
+    def get_like_id(self, obj):
+        user = self.context['request'].user
+        if user.is_authenticated:
+            like = Like.objects.filter(
+                owner=user, post=obj
+            ).first()
+            return like.id if like else None
+        return None
 
     class Meta:
         model = Post
         fields = [
             'id', 'owner', 'is_owner', 'profile_id',
             'profile_image', 'created_at', 'updated_at',
-            'title', 'content', 'image'
+            'title', 'content', 'image', 'like_id',
+            'likes_count', 'comments_count',
         ]
