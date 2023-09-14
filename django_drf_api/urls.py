@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import root_route
+from .views import root_route, logout_route
 
 urlpatterns = [
     path('', root_route),
@@ -23,7 +23,7 @@ urlpatterns = [
 
     # this adds the login
     path('api-auth/', include('rest_framework.urls')),
-
+    path('dj-rest-auth/logout/', logout_route),
     path('dj_rest_auth/', include('dj_rest_auth.urls')),
     path(
         'dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')
