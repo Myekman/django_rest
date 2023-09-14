@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import re
 import os
 import dj_database_url
 import cloudinary
@@ -72,8 +73,11 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = False
 # DEBUG = 'DEV' in os.environ
 
-ALLOWED_HOSTS = ['8000-myekman-djangorest-wrv9tc7u1ap.ws-eu104.gitpod.io', 'django-rest-framework3-cd622c575206.herokuapp.com']
-
+# ALLOWED_HOSTS = ['8000-myekman-djangorest-wrv9tc7u1ap.ws-eu104.gitpod.io', 'django-rest-framework3-cd622c575206.herokuapp.com']
+ALLOWED_HOSTS = [
+   os.environ.get('ALLOWED_HOST'),
+   '8000-myekman-djangorest-wrv9tc7u1ap.ws-eu104.gitpod.io',
+]
 
 # Application definition
 
@@ -121,10 +125,18 @@ if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
         os.environ.get('CLIENT_ORIGIN')
     ]
-else:
+if 'CLIENT_ORIGIN_DEV' in os.environ:
+    extracted_url = re.match(
+        r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE
+    ).group(0)
     CORS_ALLOWED_ORIGIN_REGEXES = [
-        r"^https://.*\.gitpod\.io$",
+        rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
     ]
+
+# else:
+#     CORS_ALLOWED_ORIGIN_REGEXES = [
+#         r"^https://.*\.gitpod\.io$",
+#     ]
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'django_drf_api.urls'

@@ -11,7 +11,8 @@ def root_route(request):
         "message": "Welcome to my drf API"
     })
 
-@api-view(['POST'])
+
+@api_view(['POST'])
 def logout_route(request):
     response = Response()
     response.set_coockie(
@@ -19,7 +20,7 @@ def logout_route(request):
         value='',
         httponly=True,
         expires='Thu, 01 Jan 1970 00:00:00 GMT',
-        max-age=0,
+        max_age=0,
         samesite=JWT_AUTH_SAMESITE,
         secure= JWT_AUTH_SECURE,
     )
@@ -28,7 +29,7 @@ def logout_route(request):
         value='',
         httponly=True,
         expires='Thu, 01 Jan 1970 00:00:00 GMT',
-        max-age=0,
+        max_age=0,
         samesite=JWT_AUTH_SAMESITE,
         secure= JWT_AUTH_SECURE,
     )
