@@ -72,7 +72,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = False
 # DEBUG = 'DEV' in os.environ
 
-ALLOWED_HOSTS = ['8000-myekman-djangorest-wrv9tc7u1ap.ws-eu104.gitpod.io', 'django-rest-framework3-cd622c575206.herokuapp.com/']
+ALLOWED_HOSTS = ['8000-myekman-djangorest-wrv9tc7u1ap.ws-eu104.gitpod.io', 'django-rest-framework3-cd622c575206.herokuapp.com']
 
 
 # Application definition
