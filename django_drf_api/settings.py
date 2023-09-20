@@ -82,6 +82,9 @@ ALLOWED_HOSTS = [
 
 # Application definition
 
+CSRF_TRUSTED_ORIGINS = ['https://8000-myekman-djangorest-wrv9tc7u1ap.ws-eu104.gitpod.io', 'https://django-rest-framework3-cd622c575206.herokuapp.com']
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -124,12 +127,10 @@ MIDDLEWARE = [
 
 if 'CLIENT_ORIGIN' in os.environ:
     CORS_ALLOWED_ORIGINS = [
-        os.environ.get('CLIENT_ORIGIN')
-    ]
+         os.environ.get('CLIENT_ORIGIN')
+     ]
 if 'CLIENT_ORIGIN_DEV' in os.environ:
-    extracted_url = re.match(
-        r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE
-    ).group(0)
+    extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
     CORS_ALLOWED_ORIGIN_REGEXES = [
         rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
     ]

@@ -24,7 +24,7 @@ urlpatterns = [
     # this adds the login
     path('api-auth/', include('rest_framework.urls')),
     path('dj-rest-auth/logout/', logout_route),
-    path('dj_rest_auth/', include('dj_rest_auth.urls')),
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path(
         'dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')
     ),
